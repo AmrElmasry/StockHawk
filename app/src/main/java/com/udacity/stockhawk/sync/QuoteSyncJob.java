@@ -8,6 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Handler;
+import android.os.Looper;
+import android.widget.Toast;
 
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
@@ -75,6 +78,13 @@ public final class QuoteSyncJob {
                 Stock stock = quotes.get(symbol);
                 StockQuote quote = stock.getQuote();
 
+                if (quote.getPrice() == null) {
+                    // Stock Not Found - remove it from saved stocks
+                    showErrorMsgToTheUser(context, symbol);
+                    PrefUtils.removeStock(context, symbol);
+                    continue;
+                }
+
                 float price = quote.getPrice().floatValue();
                 float change = quote.getChange().floatValue();
                 float percentChange = quote.getChangeInPercent().floatValue();
@@ -116,6 +126,16 @@ public final class QuoteSyncJob {
         } catch (IOException exception) {
             Timber.e(exception, "Error fetching stock quotes");
         }
+    }
+
+    private static void showErrorMsgToTheUser(final Context context, final String symbol) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(context, String.format("Stock: %s Not Found", symbol),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private static void schedulePeriodic(Context context) {
