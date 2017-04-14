@@ -18,6 +18,8 @@ import com.udacity.stockhawk.data.PrefUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -94,7 +96,14 @@ public final class QuoteSyncJob {
                 List<HistoricalQuote> history = stock.getHistory(from, to, Interval.WEEKLY);
 
                 StringBuilder historyBuilder = new StringBuilder();
-
+                // save values in order
+                Collections.sort(history, new Comparator<HistoricalQuote>() {
+                    @Override
+                    public int compare(HistoricalQuote o1, HistoricalQuote o2) {
+                        return o1.getDate().getTimeInMillis() < o2.getDate().getTimeInMillis() ?
+                                -1 : 1;
+                    }
+                });
                 for (HistoricalQuote it : history) {
                     historyBuilder.append(it.getDate().getTimeInMillis());
                     historyBuilder.append(", ");

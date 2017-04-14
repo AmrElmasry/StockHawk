@@ -23,6 +23,7 @@ import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 import com.udacity.stockhawk.sync.QuoteSyncJob;
+import com.udacity.stockhawk.util.Navigator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onClick(String symbol) {
         Timber.d("Symbol clicked: %s", symbol);
+        Navigator.openStockDetailsScreen(this, symbol);
     }
 
     @Override
