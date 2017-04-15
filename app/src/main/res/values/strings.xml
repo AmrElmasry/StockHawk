@@ -33,5 +33,6 @@
     <string name="toast_no_connectivity">Will refresh when network available.</string>
     <string name="stock_history">Stock History:</string>
     <string name="stock_value_label">stock value</string>
+    <string name="no_stocks_found">No Stocks found!</string>
 
 </resources>
