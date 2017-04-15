@@ -36,5 +36,6 @@
     <string name="no_stocks_found">No Stocks found!</string>
     <string name="no_history_msg">There is no available history for this stock!</string>
     <string name="date_format" translatable="false">dd-MM-yyyy</string>
+    <string name="add_new_stock_button">Add new stock button</string>
 
 </resources>
