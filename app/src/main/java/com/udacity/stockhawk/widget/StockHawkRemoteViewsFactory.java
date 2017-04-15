@@ -28,12 +28,10 @@ public class StockHawkRemoteViewsFactory implements RemoteViewsService.RemoteVie
     private final DecimalFormat dollarFormat;
     private final DecimalFormat percentageFormat;
     private Context mContext;
-    private int mAppWidgetId;
     private Cursor mCursor;
 
-    public StockHawkRemoteViewsFactory(Context context, int appWidgetId) {
+    public StockHawkRemoteViewsFactory(Context context) {
         this.mContext = context;
-        mAppWidgetId = appWidgetId;
         dollarFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
         dollarFormatWithPlus = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
         dollarFormatWithPlus.setPositivePrefix("+$");
@@ -67,13 +65,11 @@ public class StockHawkRemoteViewsFactory implements RemoteViewsService.RemoteVie
 
         RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.list_item_quote);
         rv.setTextViewText(R.id.symbol, mCursor.getString(Contract.Quote.POSITION_SYMBOL));
-
         rv.setTextViewText(R.id.price, dollarFormat.format(mCursor.getFloat(Contract.Quote.POSITION_PRICE)));
 
         Intent openStockHawkIntent = new Intent(mContext, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, openStockHawkIntent, 0);
-        rv.setOnClickPendingIntent(R.id.symbol, pendingIntent);
-        rv.setOnClickPendingIntent(R.id.price, pendingIntent);
+        rv.setOnClickPendingIntent(R.id.list_item_quote_container, pendingIntent);
 
         float rawAbsoluteChange = mCursor.getFloat(Contract.Quote.POSITION_ABSOLUTE_CHANGE);
         float percentageChange = mCursor.getFloat(Contract.Quote.POSITION_PERCENTAGE_CHANGE);

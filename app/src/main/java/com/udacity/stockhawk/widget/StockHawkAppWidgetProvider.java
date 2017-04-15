@@ -31,11 +31,12 @@ public class StockHawkAppWidgetProvider extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int widgetId : appWidgetIds) {
             Intent intent = new Intent(context, StockHawkService.class);
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.app_widget_layout);
             remoteViews.setRemoteAdapter(R.id.widget_list_view, intent);
             remoteViews.setEmptyView(R.id.widget_list_view, R.id.widget_empty_view);
+
             appWidgetManager.updateAppWidget(widgetId, remoteViews);
         }
     }

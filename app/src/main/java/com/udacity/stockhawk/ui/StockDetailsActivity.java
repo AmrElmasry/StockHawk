@@ -53,7 +53,7 @@ public class StockDetailsActivity extends AppCompatActivity {
         if (stockHistory != null && stockHistory.size() > 0) {
             showStockHistory(stockHistory);
         } else {
-            mLineChart.setNoDataText("There is no available history for this stock!");
+            mLineChart.setNoDataText(getString(R.string.no_history_msg));
         }
     }
 
@@ -106,7 +106,7 @@ public class StockDetailsActivity extends AppCompatActivity {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
                 cal.setTimeInMillis((long) (value * 1000));
-                return DateFormat.format("dd-MM-yyyy", cal).toString();
+                return DateFormat.format(getString(R.string.date_format), cal).toString();
             }
         };
     }
